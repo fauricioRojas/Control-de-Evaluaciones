@@ -8,10 +8,15 @@
 
 .header {
 	padding: 15px 0 15px;
+    background-color: #FFFFFF;
 }
 
 .be-gray {
 	background-color: #D2DACB;
+}
+
+.be-ligth-gray {
+    background-color: #CECDCE;
 }
 
 .logo-tec {
@@ -24,11 +29,14 @@
 	margin-top: 100px;
 	background: #FFFFFF;
 	padding: 15px 5px 15px; 
+
+    box-shadow: 5px 5px 5px #555;
 }
 
 .text-error
 {
     color: #E74C3C;
+    font-family: 'Lato', sans-serif;
 }
 
 .text-box
@@ -37,6 +45,7 @@
     width: 100%;
     border: 1px solid #E1E8ED;
     font-size: 1.3em;
+    font-family: 'Lato', sans-serif;
 }
 
 .button
@@ -49,6 +58,7 @@
     padding: 5px 7px;
     width: 100%;
     opacity: 1;
+    font-family: 'Lato', sans-serif;
 }
 
 .button:hover {
@@ -56,9 +66,9 @@
 }
 
 .rounded-border {
-	border-radius: 5px 5px 5px 5px;
-    -moz-border-radius: 5px 5px 5px 5px;
-    -webkit-border-radius: 5px 5px 5px 5px;
+	border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
 }
 
 .be-dark-green {
@@ -77,10 +87,28 @@
 
 .label-size {
 	font-size: 1.3em;
+    font-family: 'Lato', sans-serif;
 }
 
-.lobby {
-	background-image: url("../images/035.jpg");
-	background-repeat: repeat-x;
-	background-position: 30px;
+.front-image {
+    background: url(../images/035.jpg) no-repeat fixed center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.border-red {
+    border-color: #E74C3C;
+}
+.border-gray {
+    border-color: #E1E8ED;
+}
+
+.css-form input.ng-invalid.ng-touched {
+    background-color: red;
+}
+
+.css-form input.ng-valid.ng-touched {
+    background-color: green;
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="Login">
 <head>
 	<title>Evaluation Control</title>
 	<meta charset="utf-8">
@@ -8,8 +8,8 @@
 	<link rel="stylesheet" href="../font.lato.css">
 	<link rel="stylesheet" href="../font.oxygen.css">
 </head>
-<body>
-	<div class="col-md-12 header">
+<body ng-controller="LoginController" class="be-ligth-gray">
+	<div class="col-md-12 header be-white">
 		<div class="container">
 			<div class="col-md-4 col-md-offset-1 col-xs-6 font-oxygen text-center">
 				<h1>Evaluation Control</h1>
@@ -19,33 +19,32 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-12 lobby">
-		<div class="col-md-4 col-md-offset-4 content rounded-border">
+	<div class="col-md-12">
+		<form name="form" class="col-md-4 col-md-offset-4 content rounded-border">
 			<div class="col-md-12">
 	            <p>
-	                <label class="label-size font-lato">Carne</label>
-	                <input class="text-box font-lato rounded-border" type="text" id="box-user-login">
-	                <h5 class="text-error" id="error-carne-login"></h5>
+	                <label class="label-size">Card number</label>
+	                <input class="text-box rounded-border" type="text" ng-model="cardNumber" required>
+	                <span class="text-error">{{ errorCardNumber }}</span>
 	            </p>
 	        </div>
 	        <div class="col-md-12">
 	            <p>
-	                <label class="label-size font-lato">Password</label>
-	                <input class="text-box font-lato rounded-border" type="password" id="box-pass-login">
-	                <h5 class="text-error" id="error-pass-login"></h5>
+	                <label class="label-size">Password</label>
+	                <input class="text-box rounded-border" type="password" ng-model="password" required>
+	                <span class="text-error">{{ errorPassword }}</span>
 	            </p>
 	        </div> 
-	        <div class="col-md-4 col-md-offset-4 col-xs-6 col-xs-offset-3">
-	        	<br>
-	            <input class="button be-dark-green white rounded-border font-lato" type="button" value="Log in">
-	        </div>
-	        <div class="col-md-12 col-xs-12 text-center forgot-pass font-lato">
-	        	<br>
-	            <a>¿Olvidaste tu contraseña?</a>
-	        </div>
-		</div>
+        	<div class="col-md-12">
+        		<p>
+        			<input class="button be-dark-green white rounded-border" type="button" ng-click="validateLogin()" value="Log in">
+        		</p>
+        	</div>
+		</form>
 	</div>
 
 	<script src="../angular.min.js"></script>
+	<script src="../Login/login.controller.js"></script>
+
 </body>
 </html>
