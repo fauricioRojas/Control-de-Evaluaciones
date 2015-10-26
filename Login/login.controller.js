@@ -1,37 +1,27 @@
-/*(function(){
+(function(angular) {
 	'use strict';
 
-	angular
-		.module('Login', [])
-		.controller('LoginController', LoginController);
-
-		function LoginController() {
-			var vm = this;
-			vm.carne = '2013235611';
-			vm.password = '';
-			vm.validateLogin = validateLogin;
-
-			function validateLogin() {
-				alert("VALIDAR");
-			}
-		}
-});*/
-
-angular.module("Login", [])
+	angular.module("Login", [])
 	.controller("LoginController", ["$scope", function(vm) {
 		vm.cardNumber = "";
 		vm.errorCardNumber = "";
 		vm.password = "";
 		vm.errorPassword = "";
+		vm.afterValidate = afterValidate;
 		vm.validateCardNumber = validateCardNumber;
 		vm.validatePassword = validatePassword;
-		vm.validateLogin = validateLogin;
+		vm.login = login;
+
+		function afterValidate() {
+			vm.cardNumber = "";
+			vm.password = "";
+		}
 
 		function validateCardNumber() {
 			vm.errorCardNumber = "";
 
 			if(vm.cardNumber === "") {
-				vm.errorCardNumber = "The card number can't be empty";
+				vm.errorCardNumber = "The card number can't be empty.";
 			}
 		}
 		
@@ -39,18 +29,19 @@ angular.module("Login", [])
 			vm.errorPassword = "";
 
 			if(vm.password === "") {
-				vm.errorPassword = "The password can't be empty";
+				vm.errorPassword = "The password can't be empty.";
 			}
 		}
 		
-		function validateLogin() {
+		function login() {
 			validateCardNumber();
 			validatePassword();
 
 			if(vm.errorCardNumber === "" && vm.errorPassword === "") {
 				console.log("LOGIN OK");
-				vm.cardNumber = "";
-				vm.password = "";
+				vm.afterValidate();
 			}
 		}
 	}]);
+
+})(window.angular);
