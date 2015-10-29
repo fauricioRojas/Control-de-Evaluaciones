@@ -1,70 +1,67 @@
 (function(angular) {
-	'use strict';
+    'use strict';
 
-	angular.module("Login", [])
-	.controller("LoginController", ["$scope", "$http", function(vm, $http) {
-		vm.user = [];
-		vm.cardNumber = "";
-		vm.errorCardNumber = "";
-		vm.password = "";
-		vm.errorPassword = "";
-		vm.errorLogin = false;
-		vm.errorDataBase = false;
+    angular.module("Login", [])
+    .controller("LoginController", ["$scope", "$http", function(vm, $http) {
+        vm.user = [];
+        vm.id = "";
+        vm.errorId = "";
+        vm.password = "";
+        vm.errorPassword = "";
+        vm.errorLogin = false;
 
-		vm.afterValidate = afterValidate;
-		vm.validateCardNumber = validateCardNumber;
-		vm.validatePassword = validatePassword;
-		vm.login = login;
-		vm.getUser = getUser;
+        vm.afterValidate = afterValidate;
+        vm.validateId = validateId;
+        vm.validatePassword = validatePassword;
+        vm.login = login;
+        vm.getUser = getUser;
 
-		function getUser() { // 2-0562-0727
-		    $http.get("./Login/login.model.php?action=login&id="+vm.cardNumber+"&pass="+vm.password)
-		        .success(function(response) {
-		            vm.user = response;
-		        });
-		}
+        function getUser() { // 2-0562-0727
+            $http.get("./Login/login.model.php?action=login&id="+vm.id+"&pass="+vm.password)
+                .success(function(response) {
+                    vm.user = response;
+                });
+        }
 
-		function afterValidate() {
-			vm.cardNumber = "";
-			vm.password = "";
-		}
+        function afterValidate() {
+            vm.id = "";
+            vm.password = "";
+        }
 
-		function validateCardNumber() {
-			vm.errorCardNumber = "";
+        function validateId() {
+            vm.errorId = "";
 
-			if(!vm.cardNumber.length) {
-				vm.errorCardNumber = "The card number can't be empty.";
-			}
-		}
-		
-		function validatePassword() {
-			vm.errorPassword = "";
+            if(!vm.id.length) {
+                vm.errorId = "The identification can't be empty.";
+            }
+        }
 
-			if(!vm.password.length) {
-				vm.errorPassword = "The password can't be empty.";
-			}
-		}
-		
-		function login() {
-			vm.errorLogin = false;
-			vm.errorDataBase = false;
+        function validatePassword() {
+            vm.errorPassword = "";
 
-			validateCardNumber();
-			validatePassword();
+            if(!vm.password.length) {
+                vm.errorPassword = "The password can't be empty.";
+            }
+        }
 
-			if(vm.errorCardNumber === "" && vm.errorPassword === "") {
-				vm.getUser();
-				console.log("Luego de ir a BD -> "+vm.user);
-				if(vm.user.length) {
-					vm.afterValidate();
-					console.log(vm.user[0].id);
-					console.log(vm.user[0].type);
-				}
-				else {
-					vm.errorLogin = true;
-				}
-			}
-		}
-	}]);
+        function login() {
+            vm.errorLogin = false;
+
+            vm.validateId();
+            vm.validatePassword();
+
+            if(!vm.errorId.length && !vm.errorPassword.length) {
+                vm.getUser();
+                
+                if(vm.user.length > 0) {
+                    vm.afterValidate();
+                    alert("Login correcto.");
+                }
+                else {
+                    vm.errorLogin = true;
+                }
+            }
+        }
+    }]);
 
 })(window.angular);
