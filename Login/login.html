@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html ng-app="Login">
+<head>
+	<title>Evaluation Control</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="./login.css">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/font.lato.css">
+	<link rel="stylesheet" href="../css/font.oxygen.css">
+</head>
+<body ng-controller="LoginController" class="be-ligth-gray">
+	<div class="container font-oxygen text-center">
+		<h1>Evaluation Control</h1>
+	</div>
+	<div class="container">
+		<div class="col-md-4 col-md-offset-4 content rounded-border">
+			<div ng-show="errorLogin" class="alert alert-danger">
+				The identification or the password is incorrect.
+			</div>
+			<div ng-show="errorDataBase" class="alert alert-danger">
+				<p>An error has occurred when connecting to the database.</p>
+				<p>Please try again.</p>
+			</div>
+
+			<div class="form-group">
+	            <p>
+	                <label class="label-size">Card number</label>
+	                <input class="form-control text-box" type="text" ng-model="cardNumber" >
+                	<span class="text-error">{{ errorCardNumber }}</span>
+	            </p>
+	        </div>
+	        <div class="form-group">
+	            <p>
+	                <label class="label-size">Password</label>
+	                <input class="form-control text-box" type="password" ng-model="password" required>
+	                <span class="text-error">{{ errorPassword }}</span>
+	            </p>
+	        </div> 
+        	<div class="form-group">
+        		<p>
+        			<center><button class="btn btn-extra" ng-click="login()">Log in <span class="glyphicon glyphicon-arrow-right"></span></button></center>
+        		</p>
+        	</div>
+		</div>
+	</div>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+	<script src="./login.controller.js"></script>
+
+</body>
+</html>

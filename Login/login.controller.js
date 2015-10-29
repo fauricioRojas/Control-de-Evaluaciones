@@ -3,6 +3,7 @@
 
 	angular.module("Login", [])
 	.controller("LoginController", ["$scope", "$http", function(vm, $http) {
+		vm.user = [];
 		vm.cardNumber = "";
 		vm.errorCardNumber = "";
 		vm.password = "";
@@ -16,7 +17,7 @@
 		vm.login = login;
 		vm.getUser = getUser;
 
-		function getUser() {
+		function getUser() { // 2-0562-0727
 		    $http.get("../Login/login.model.php?action=login&id="+vm.cardNumber+"&pass="+vm.password)
 		        .success(function(response) {
 		            vm.user = response;
@@ -53,15 +54,15 @@
 
 			if(vm.errorCardNumber === "" && vm.errorPassword === "") {
 				vm.getUser();
-
-				/*if(vm.user != []) {
+				console.log("Luego de ir a BD -> "+vm.user);
+				if(vm.user != []) {
 					vm.afterValidate();
 					console.log(vm.user.id);
 					console.log(vm.user.type);
 				}
 				else {
 					vm.errorLogin = true;
-				}*/
+				}
 			}
 		}
 	}]);
