@@ -21,6 +21,14 @@
 	</div>
 	<div class="container">
 		<div class="col-md-4 col-md-offset-4 content rounded-border">
+			<div ng-show="errorLogin" class="alert alert-danger">
+				The identification or the password is incorrect.
+			</div>
+			<div ng-show="errorDataBase" class="alert alert-danger">
+				<p>An error has occurred when connecting to the database.</p>
+				<p>Please try again.</p>
+			</div>
+
 			<div class="form-group">
 	            <p>
 	                <label class="label-size">Card number</label>

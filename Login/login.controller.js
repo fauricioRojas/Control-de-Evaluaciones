@@ -8,6 +8,7 @@
 		vm.password = "";
 		vm.errorPassword = "";
 		vm.errorLogin = false;
+		vm.errorDataBase = false;
 
 		vm.afterValidate = afterValidate;
 		vm.validateCardNumber = validateCardNumber;
@@ -30,7 +31,7 @@
 		function validateCardNumber() {
 			vm.errorCardNumber = "";
 
-			if(vm.cardNumber === "") {
+			if(!vm.cardNumber.length) {
 				vm.errorCardNumber = "The card number can't be empty.";
 			}
 		}
@@ -38,22 +39,20 @@
 		function validatePassword() {
 			vm.errorPassword = "";
 
-			if(vm.password === "") {
+			if(!vm.password.length) {
 				vm.errorPassword = "The password can't be empty.";
 			}
 		}
 		
 		function login() {
 			vm.errorLogin = false;
+			vm.errorDataBase = false;
+
 			validateCardNumber();
 			validatePassword();
 
 			if(vm.errorCardNumber === "" && vm.errorPassword === "") {
-				$http.get("../Login/login.model.php?action=login&id="+vm.cardNumber+"&pass="+vm.password)
-		        .success(function(response) {
-		        	console.log(response);
-		            vm.user = response;
-		        });
+				vm.getUser();
 
 				/*if(vm.user != []) {
 					vm.afterValidate();
