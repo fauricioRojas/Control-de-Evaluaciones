@@ -18,7 +18,7 @@
 		vm.getUser = getUser;
 
 		function getUser() { // 2-0562-0727
-		    $http.get("../Login/login.model.php?action=login&id="+vm.cardNumber+"&pass="+vm.password)
+		    $http.get("./Login/login.model.php?action=login&id="+vm.cardNumber+"&pass="+vm.password)
 		        .success(function(response) {
 		            vm.user = response;
 		        });
@@ -55,10 +55,10 @@
 			if(vm.errorCardNumber === "" && vm.errorPassword === "") {
 				vm.getUser();
 				console.log("Luego de ir a BD -> "+vm.user);
-				if(vm.user != []) {
+				if(vm.user.length) {
 					vm.afterValidate();
-					console.log(vm.user.id);
-					console.log(vm.user.type);
+					console.log(vm.user[0].id);
+					console.log(vm.user[0].type);
 				}
 				else {
 					vm.errorLogin = true;
