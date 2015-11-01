@@ -1,17 +1,24 @@
-(function(angular) {
+(function() {
     'use strict';
 
-    angular.module("Professor", [])
-    .controller("ProfessorController", ["$scope", "$http", function(vm, $http) {
-        vm.professor = [];
-        vm.getCourses = getCourses;
-
-        function getCourses() {
-            $http.get("./Professor/")
-                .success(function(response) {
-                    vm.courses = response;
-                });
+    angular
+    .module("professor.ctrl", [])
+    .controller("ProfessorCtrl", function($scope, LoginService, ProfessorService) {
+        $scope.navCourses = false;
+        $scope.showCourses = showCourses;
+        
+        getProfessor();
+        
+        function getProfessor() {
+            ProfessorService.getProfessor(LoginService.getLoggedUser())
+            .success(function(data) {
+                $scope.professor = data;
+            });
         }
-    }]);
+        
+        function showCourses() {
+            $scope.navCourses = true;
+        }
+    });
 
-})(window.angular);
+})();

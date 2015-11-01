@@ -1,67 +1,73 @@
-(function(angular) {
+(function() {
     'use strict';
 
-    angular.module("Login", [])
-    .controller("LoginController", ["$scope", "$http", function(vm, $http) {
-        vm.user = [];
-        vm.id = "";
-        vm.errorId = "";
-        vm.password = "";
-        vm.errorPassword = "";
-        vm.errorLogin = false;
+    angular
+    .module("login.ctrl", [])
+    .controller("LoginCtrl", function($scope, LoginService, $location) {
+        $scope.id = "";
+        $scope.errorId = "";
+        $scope.pass = "";
+        $scope.errorPass = "";
+        $scope.errorLogin = false;
 
-        vm.afterValidate = afterValidate;
-        vm.validateId = validateId;
-        vm.validatePassword = validatePassword;
-        vm.login = login;
-        vm.getUser = getUser;
-
+        $scope.afterValidate = afterValidate;
+        $scope.validateId = validateId;
+        $scope.validatePassword = validatePassword;
+        $scope.login = login;
+        $scope.getUser = getUser;
+        
         function getUser() { // 2-0562-0727
-            $http.get("./Login/login.model.php?action=login&id="+vm.id+"&pass="+vm.password)
-                .success(function(response) {
-                    vm.user = response;
-                });
+            LoginService.login($scope.id, $scope.pass)
+            .success(function(data) {
+                $scope.user = data;
+            });
         }
 
         function afterValidate() {
-            vm.id = "";
-            vm.password = "";
+            $scope.id = "";
+            $scope.pass = "";
         }
 
         function validateId() {
-            vm.errorId = "";
+            $scope.errorId = "";
 
-            if(!vm.id.length) {
-                vm.errorId = "The identification can't be empty.";
+            if(!$scope.id.length) {
+                $scope.errorId = "The identification can't be empty.";
             }
         }
 
         function validatePassword() {
-            vm.errorPassword = "";
+            $scope.errorPass = "";
 
-            if(!vm.password.length) {
-                vm.errorPassword = "The password can't be empty.";
+            if(!$scope.pass.length) {
+                $scope.errorPass = "The password can't be empty.";
             }
         }
 
         function login() {
-            vm.errorLogin = false;
+            $scope.errorLogin = false;
 
-            vm.validateId();
-            vm.validatePassword();
+            $scope.validateId();
+            $scope.validatePassword();
 
-            if(!vm.errorId.length && !vm.errorPassword.length) {
-                vm.getUser();
-                
-                if(vm.user.length > 0) {
-                    vm.afterValidate();
-                    alert("Login correcto.");
+            if(!$scope.errorId.length && !$scope.errorPass.length) {
+                $scope.getUser();
+                console.log("Validar $scope.user -> ", $scope.user);
+                if(!$scope.user) {
+                    $scope.errorLogin = true;
                 }
                 else {
-                    vm.errorLogin = true;
+                    //$scope.afterValidate();
+                    
+                    if($scope.user.type === 'P') {
+                        $location.path('/professor');
+                    }
+                    else {
+                        $location.path('/student');
+                    }
                 }
             }
         }
-    }]);
+    });
 
-})(window.angular);
+})();

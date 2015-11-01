@@ -22,7 +22,7 @@
         $result = pg_query($conn, $query);
 
         while ($row = pg_fetch_row($result)) {
-            $JSON[] = array(
+            $JSON = array(
                     'id' => $row[0], 
                     'type' => $row[1]
                     );
