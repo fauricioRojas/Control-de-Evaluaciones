@@ -1,25 +1,121 @@
-<nav id="myNavbar" class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <span class="navbar-brand font-oxygen">Welcome {{professor.name + " " + professor.lastName1 + " " + professor.lastName2}}</span>
-        </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse font-lato" id="navbarCollapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#" ng-click="showCourses()">Courses</a></li>
-                <li><a href="#" target="_blank" ng-click="logout()">Log out</a></li>
-            </ul>
-        </div>
+<div class="container">
+    <div class="col-md-10">
+        <h1>Bienvenido(a) {{profesor.nombre + " " + profesor.apellido1 + " " + profesor.apellido2}}</h1>
     </div>
-</nav>
-<div class="container" ng-show="navCourses">
-    <div class="jumbotron">
-        <h1>Courses</h1>
+    <div class="col-md-2">
+        <button class="btn btn-success" ng-click="logout()">Salir 
+            <span class="glyphicon glyphicon-log-out"></span>
+        </button>
     </div>
 </div>
+<div class="container">
+    <h2>Mis cursos</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nombre del curso</th>
+          <th>Ver evaluaciones</th>
+          <th>Ver estudiantes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="curso in cursos">
+          <td>{{ curso.nombre }}</td>
+          <td>
+            <button class="btn" ng-click="showEvaluations(curso)">
+              <span class="glyphicon glyphicon-menu-hamburger"></span>
+            </button>
+          </td>
+          <td>
+              <button class="btn" ng-click="showStudents(curso)"> 
+                <span class="glyphicon glyphicon-education"></span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+
+<div class="container" ng-show="studentsVisible">
+    <h2>Estudiantes del curso {{cursoActual.nombre}}</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nombre del curso</th>
+          <th>Ver evaluaciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="estudiante in estudiantes">
+          <td>{{ curso.nombre }}</td>
+          <td>
+            <button class="btn" ng-click="showEvaluations(curso)">
+              <span class="glyphicon glyphicon-menu-hamburger"></span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+
+<div class="container" ng-show="showEvaluaciones">
+    <h3>Evaluaciones del curso {{cursoActual.nombre}}</h3>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nombre de la Evaluación</th>
+          <th>Porcentaje</th>
+          <th>Editar</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="eval in evaluaciones">
+          <td>{{ eval.nombre }}</td>
+          <td>{{ eval.porcentaje }}</td>
+          <td>
+            <button class="btn" ng-click="editarEvaluacion(eval)">
+              <span class="glyphicon glyphicon-pencil"></span>
+            </button>
+          </td>
+          <td>
+            <button class="btn" ng-click="eliminarEvaluacion(eval)">
+              <span class="glyphicon glyphicon-trash"></span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-success" ng-click="nuevaEval = true">
+        <span class="glyphicon glyphicon-plus"></span>
+    </button>
+</div>
+<br><br>
+<div class="container" ng-show="nuevaEval || editarEval">
+    <div ng-show="exitoAlGuardarEval" class="alert alert-success text-center" role="alert">
+        La evaluación se ha guardado correctamente.
+    </div>
+    <div ng-show="exitoAlEditarEval" class="alert alert-success text-center" role="alert">
+        La evaluación se ha modificado correctamente.
+    </div>
+    
+    <h3 ng-show="nuevaEval">Crear nueva evaluación para el curso {{cursoActual.nombre}}</h3>
+    <h3 ng-show="editarEval">Editar evaluación {{evalActual.nombre}}</h3>
+    <div class="form-group">
+        <label >Nombre de la evaluación:</label>
+        <div>
+            <input type="text" class="form-control" ng-model="nombreEval" placeholder="Nombre de la evaluación">
+        </div>
+    </div> 
+    <div class="form-group">
+        <label>Porcentaje de evaluación:</label>
+        <div>
+            <input type="text" class="form-control" ng-model="porcentajeEval" placeholder="Porcentaje de evaluación">
+        </div>
+    </div>
+    <button class="btn btn-success" ng-disabled="error" ng-click="gestionEvaluacion()">Guardar Cambios
+        <span class="glyphicon glyphicon-save"></span>
+    </button>
+</div>
+<br><br>

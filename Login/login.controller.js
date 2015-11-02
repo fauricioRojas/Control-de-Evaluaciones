@@ -10,9 +10,8 @@
         $scope.errorPass = "";
         $scope.errorLogin = false;
 
-        $scope.afterValidate = afterValidate;
-        $scope.validateId = validateId;
-        $scope.validatePassword = validatePassword;
+        $scope.validarId = validarId;
+        $scope.validarPass = validarPass;
         $scope.login = login;
         $scope.getUser = getUser;
         
@@ -23,32 +22,27 @@
             });
         }
 
-        function afterValidate() {
-            $scope.id = "";
-            $scope.pass = "";
-        }
-
-        function validateId() {
+        function validarId() {
             $scope.errorId = "";
 
             if(!$scope.id.length) {
-                $scope.errorId = "The identification can't be empty.";
+                $scope.errorId = "La cedula no puede ser vacia.";
             }
         }
 
-        function validatePassword() {
+        function validarPass() {
             $scope.errorPass = "";
 
             if(!$scope.pass.length) {
-                $scope.errorPass = "The password can't be empty.";
+                $scope.errorPass = "La contraseña no puede ser vacia.";
             }
         }
 
         function login() {
             $scope.errorLogin = false;
 
-            $scope.validateId();
-            $scope.validatePassword();
+            $scope.validarId();
+            $scope.validarPass();
 
             if(!$scope.errorId.length && !$scope.errorPass.length) {
                 $scope.getUser();
@@ -57,8 +51,6 @@
                     $scope.errorLogin = true;
                 }
                 else {
-                    //$scope.afterValidate();
-                    
                     if($scope.user.type === 'P') {
                         $location.path('/professor');
                     }
